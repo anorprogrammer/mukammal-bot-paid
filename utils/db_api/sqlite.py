@@ -66,6 +66,12 @@ class Database:
         sql, parameters = self.format_args(sql, kwargs)
 
         return self.execute(sql, parameters=parameters, fetchone=True)
+    
+    def get_all_users_id(self):
+        all_user_id = list(self.execute("SELECT id FROM Users;", fetchall=True))
+        # [(12345678,), (987654321,)]
+        new_all_user_id = list(map(lambda x: x[0], all_user_id))
+        return new_all_user_id
 
     def count_users(self):
         return self.execute("SELECT COUNT(*) FROM Users;", fetchone=True)
