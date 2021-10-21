@@ -12,7 +12,10 @@ async def bot_start(message: types.Message):
     name = message.from_user.full_name
     # Foydalanuvchini bazaga qo'shamiz
     try:
-        db.add_user(id=message.from_user.id,
+        if message.from_user.id in db.get_all_users_id():
+            pass
+        else:
+            db.add_user(id=message.from_user.id,
                     name=name)
     except sqlite3.IntegrityError as err:
         await bot.send_message(chat_id=ADMINS[0], text=err)
